@@ -372,7 +372,7 @@ public class CGameNetManager : MonoBehaviour
 		//{
 		//	return false;
 		//}
-		return true;
+		return false;
 	}
 
 	public bool IsLogin()

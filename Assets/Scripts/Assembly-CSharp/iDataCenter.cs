@@ -863,6 +863,8 @@ public class iDataCenter
 			LoadData(content);
 			return false;
 		}
+		MyUtils.UnZipString(content, ref content);
+		content = XXTEAUtils.Decrypt(content, iServerConfigData.GetInstance().m_sServerInfoKey);
 		LoadData(content);
 		return true;
 	}
@@ -871,8 +873,11 @@ public class iDataCenter
 	{
 		XmlDocument xmlDocument = new XmlDocument();
 		SaveData(xmlDocument);
+		string outerXML = xmlDocument.OuterXml;
+		outerXML = XXTEAUtils.Encrypt(outerXML, iServerConfigData.GetInstance().m_sServerInfoKey);
+		MyUtils.ZipString(outerXML, ref outerXML);
 		string filename = Utils.SavePath() + "/gamedata.xml";
-		xmlDocument.Save(filename);
+		File.WriteAllText(filename, outerXML);
 	}
 
 	protected void SaveData(XmlDocument doc)

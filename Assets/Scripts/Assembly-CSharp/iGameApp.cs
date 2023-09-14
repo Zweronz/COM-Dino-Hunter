@@ -285,6 +285,7 @@ public class iGameApp
 
 	public void ScreenLog(string str)
 	{
+		m_Debug.Debug(str);
 	}
 
 	public void ClearScreenLog()

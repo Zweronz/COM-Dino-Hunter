@@ -1172,8 +1172,10 @@ public class iDataCenter
 
 	public void LoadData(string content)
 	{
+		Debug.LogError("saazeajklne");
 		if (content.Length < 1)
 		{
+			Debug.LogError("AGHH!!!");
 			Clear();
 			m_bFirstTimePlay = true;
 			m_nTutorialVillageState = -1;
@@ -1206,6 +1208,7 @@ public class iDataCenter
 
 	protected void Load_1_0(XmlNode root)
 	{
+		Debug.LogError("abghahghag");
 		string value = string.Empty;
 		if (MyUtils.GetAttribute(root, "gameversion", ref value))
 		{

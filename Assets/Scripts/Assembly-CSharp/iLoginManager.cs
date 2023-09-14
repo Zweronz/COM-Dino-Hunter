@@ -99,7 +99,6 @@ public class iLoginManager : MonoBehaviour
 
 	public void StartApp(OnSuccess onsuccess, OnFailed onfailed, OnNetError onneterror)
 	{
-		Debug.LogError("baagahgahg!!");
 		m_State = kState.StartApp;
 		m_OnSuccess = onsuccess;
 		m_OnFailed = onfailed;
@@ -184,7 +183,6 @@ public class iLoginManager : MonoBehaviour
 
 	protected void OnVerifySuccess()
 	{
-		Debug.LogError("bagh!!");
 		m_DataCenterNet.Save();
 		if (m_State == kState.Timeout)
 		{

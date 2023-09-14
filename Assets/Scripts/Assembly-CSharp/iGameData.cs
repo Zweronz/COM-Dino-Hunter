@@ -92,6 +92,7 @@ public class iGameData
 
 	public bool Load()
 	{
+		UnityEngine.Debug.LogError("hello Team!");
 		try
 		{
 			iGameApp.GetInstance().ScreenLog("Loading m_WeaponCenter");
@@ -178,6 +179,7 @@ public class iGameData
 		}
 		catch (Exception ex)
 		{
+			UnityEngine.Debug.LogError(ex);
 			iGameApp.GetInstance().ScreenLog("error msg: " + ex.Message);
 		}
 		iGameApp.GetInstance().ClearScreenLog();

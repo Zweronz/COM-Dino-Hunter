@@ -44,7 +44,7 @@ public class MyUtils
 	{
 		get
 		{
-			return m_SimulatePlatform == PlatformEnum.Windows;
+			return !Application.isMobilePlatform;
 		}
 	}
 

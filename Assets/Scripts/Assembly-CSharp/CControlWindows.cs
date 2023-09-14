@@ -23,10 +23,6 @@ public class CControlWindows : CControlBase
 		if (Input.GetKeyDown(KeyCode.T))
 		{
 		}
-		if (Input.GetKeyDown(KeyCode.R))
-		{
-			m_GameScene.RestartGame();
-		}
 		if (m_User == null || (m_GameScene.GameStatus != iGameSceneBase.kGameStatus.Gameing && m_GameScene.GameStatus != iGameSceneBase.kGameStatus.GameOver_ShowTime))
 		{
 			return;
@@ -61,9 +57,8 @@ public class CControlWindows : CControlBase
 			Ray ray = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
 			m_User.LookAt(ray.GetPoint(1000f));
 		}
-		if (Input.GetMouseButton(1))
+		if (Screen.lockCursor)
 		{
-			Screen.lockCursor = true;
 			float axis = Input.GetAxis("Mouse X");
 			if (axis != 0f)
 			{
@@ -78,26 +73,28 @@ public class CControlWindows : CControlBase
 			{
 				m_Camera.Pitch(Mathf.Clamp(axis2, -1f, 1f) * 270f * Time.deltaTime);
 			}
-			if (m_User.IsCanAim() && (axis != 0f || axis2 != 0f))
+			if (Input.GetMouseButton(1))
 			{
-				Ray ray2 = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
-				m_User.LookAt(ray2.GetPoint(1000f));
+				if (m_User.IsCanAim() && (axis != 0f || axis2 != 0f))
+				{
+					Ray ray2 = m_Camera.ScreenPointToRay(m_GameState.ScreenCenter, 0f);
+					m_User.LookAt(ray2.GetPoint(1000f));
+				}
+				if (Mathf.Abs(axis) > 0.1f || Mathf.Abs(axis2) > 0.1f)
+				{
+					m_GameScene.AssistAim_Stop();
+				}
+				else if (m_User.IsFire() && !m_GameScene.IsAssistAim())
+				{
+					m_GameScene.AssistAim_Start();
+				}
 			}
-			if (Mathf.Abs(axis) > 0.1f || Mathf.Abs(axis2) > 0.1f)
+			else
 			{
-				m_GameScene.AssistAim_Stop();
-			}
-			else if (m_User.IsFire() && !m_GameScene.IsAssistAim())
-			{
-				m_GameScene.AssistAim_Start();
-			}
-		}
-		else
-		{
-			Screen.lockCursor = false;
-			if (!m_User.IsFire() && m_GameScene.IsAssistAim())
-			{
-				m_GameScene.AssistAim_Stop();
+				if (!m_User.IsFire() && m_GameScene.IsAssistAim())
+				{
+					m_GameScene.AssistAim_Stop();
+				}
 			}
 		}
 		if (m_User.IsCanAttack())

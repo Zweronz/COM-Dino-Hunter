@@ -1084,7 +1084,7 @@ public class iGameSceneBase
 		m_User.MoveStop();
 		if (MyUtils.isWindows)
 		{
-			Screen.lockCursor = false;
+			//Screen.lockCursor = false;
 		}
 	}
 
@@ -1289,7 +1289,7 @@ public class iGameSceneBase
 		m_User.MoveStop();
 		if (MyUtils.isWindows)
 		{
-			Screen.lockCursor = false;
+			//Screen.lockCursor = false;
 		}
 	}
 

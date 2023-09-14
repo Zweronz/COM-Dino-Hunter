@@ -92,7 +92,6 @@ public class iGameData
 
 	public bool Load()
 	{
-		UnityEngine.Debug.LogError("hello Team!");
 		try
 		{
 			iGameApp.GetInstance().ScreenLog("Loading m_WeaponCenter");

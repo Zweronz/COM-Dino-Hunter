@@ -1,0 +1,12 @@
+<!--
+	icon ͼ��
+	desc ����
+-->
+<loadtip>
+	<tip icon="loading_1" desc="Generations of artisans devoted their lives to crafting this gun. Only the best hunter deserves it." />
+	<tip icon="loading_2" desc="Its sharp arrow casts a flash of faint cold light." />
+	<tip icon="loading_3" desc="One of the most coveted weapons for its devastating power." />
+	<tip icon="loading_4" desc="This machine gun once helped your antecedents kill hundreds of fierce dinosaurs in one war alone." />
+	<tip icon="loading_5" desc="Who knows when the next famine will break out. Use this weapon to freeze dinosaurs for food reserves." />
+	<tip icon="loading_6" desc="Just a glance at this cleaver sends shivers down your spine." />
+</loadtip>

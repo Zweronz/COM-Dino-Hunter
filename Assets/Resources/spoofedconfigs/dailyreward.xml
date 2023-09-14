@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+	<node logincount="1" iscrystal="false" value="100"/>
+	<node logincount="2" iscrystal="false" value="200"/>
+	<node logincount="3" iscrystal="true" value="5"/>
+	<node logincount="4" iscrystal="false" value="300"/>
+	<node logincount="5" iscrystal="false" value="400"/>
+	<node logincount="6" iscrystal="false" value="500"/>
+	<node logincount="7" iscrystal="true" value="10"/>
+</root>

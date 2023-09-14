@@ -1,8 +1,9 @@
-Shader "Unlit/Transparent Colored"
+Shader "Unlit/Transparent Masked"
 {
 	Properties
 	{
 		_MainTex ("Base (RGB), Alpha (A)", 2D) = "black" {}
+		_Mask ("Alpha (A)", 2D) = "white" {}
 	}
 	
 	SubShader
@@ -32,39 +33,41 @@ Shader "Unlit/Transparent Colored"
 			#include "UnityCG.cginc"
 
 			sampler2D _MainTex;
+			sampler2D _Mask;
 			float4 _MainTex_ST;
 	
 			struct appdata_t
 			{
 				float4 vertex : POSITION;
 				float2 texcoord : TEXCOORD0;
+				float2 texcoord1 : TEXCOORD1;
 				fixed4 color : COLOR;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 	
 			struct v2f
 			{
 				float4 vertex : SV_POSITION;
-				half2 texcoord : TEXCOORD0;
+				float2 texcoord : TEXCOORD0;
+				float2 texcoord1 : TEXCOORD1;
 				fixed4 color : COLOR;
-				UNITY_VERTEX_OUTPUT_STEREO
 			};
 	
 			v2f o;
 
 			v2f vert (appdata_t v)
 			{
-				UNITY_SETUP_INSTANCE_ID(v);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord = v.texcoord;
+				o.texcoord1 = v.texcoord1;
 				o.color = v.color;
 				return o;
 			}
 				
 			fixed4 frag (v2f IN) : SV_Target
 			{
-				return tex2D(_MainTex, IN.texcoord) * IN.color;
+				half4 col = tex2D(_MainTex, IN.texcoord) * IN.color;
+				col.a *= tex2D(_Mask, IN.texcoord1).a;
+				return col;
 			}
 			ENDCG
 		}

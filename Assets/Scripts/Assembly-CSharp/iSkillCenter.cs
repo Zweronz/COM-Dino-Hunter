@@ -99,12 +99,12 @@ public class iSkillCenter
 	{
 		sFileNameMonster = sFileName;
 		string content = string.Empty;
-		if (!Utils.FileGetString(sFileName + iMacroDefine.SaveExpandedName, ref content))
-		{
-			return false;
-		}
-		sMD5Monster = MyUtils.GetMD5(content);
-		Load_MonsterData(content);
+		//if (!Utils.FileGetString(sFileName + iMacroDefine.SaveExpandedName, ref content))
+		//{
+		//	return false;
+		//}
+		//sMD5Monster = ;//MyUtils.GetMD5(content);
+		Load_MonsterData(SpoofedData.LoadSpoof(sFileName));
 		return true;
 	}
 
@@ -112,12 +112,12 @@ public class iSkillCenter
 	{
 		sFileNamePlayer = sFileName;
 		string content = string.Empty;
-		if (!Utils.FileGetString(sFileName + iMacroDefine.SaveExpandedName, ref content))
-		{
-			return false;
-		}
-		sMD5Player = MyUtils.GetMD5(content);
-		Load_PlayerData(content);
+		//if (!Utils.FileGetString(sFileName + iMacroDefine.SaveExpandedName, ref content))
+		//{
+		//	return false;
+		//}
+		//sMD5Player = ;//MyUtils.GetMD5(content);
+		Load_PlayerData(SpoofedData.LoadSpoof(sFileName));
 		return true;
 	}
 
@@ -136,8 +136,6 @@ public class iSkillCenter
 
 	protected void Load_MonsterData(string content)
 	{
-		content = XXTEAUtils.Decrypt(content, iServerConfigData.GetInstance().m_sServerInfoKey);
-		MyUtils.UnZipString(content, ref content);
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.LoadXml(content);
 		XmlNode documentElement = xmlDocument.DocumentElement;
@@ -169,8 +167,6 @@ public class iSkillCenter
 
 	protected void Load_PlayerData(string content)
 	{
-		content = XXTEAUtils.Decrypt(content, iServerConfigData.GetInstance().m_sServerInfoKey);
-		MyUtils.UnZipString(content, ref content);
 		XmlDocument xmlDocument = new XmlDocument();
 		xmlDocument.LoadXml(content);
 		XmlNode documentElement = xmlDocument.DocumentElement;

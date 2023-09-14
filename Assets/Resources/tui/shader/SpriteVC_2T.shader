@@ -16,7 +16,6 @@ SubShader {
    Bind "texcoord", TexCoord0
   }
   ZWrite Off
-  Cull Off
   Fog { Mode Off }
   Blend SrcAlpha OneMinusSrcAlpha
   ColorMask RGB

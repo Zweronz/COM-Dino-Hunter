@@ -48,6 +48,7 @@ public class TAudioController : MonoBehaviour
 			gameObject2.name = text;
 			gameObject2.transform.parent = transform;
 			gameObject2.transform.localPosition = Vector3.zero;
+			gameObject2.GetComponent<AudioSource>().spatialBlend = 0;
 		}
 		else
 		{

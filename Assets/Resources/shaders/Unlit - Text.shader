@@ -1,10 +1,10 @@
-Shader "Unlit/Transparent Colored"
+Shader "Unlit/Text"
 {
 	Properties
 	{
-		_MainTex ("Base (RGB), Alpha (A)", 2D) = "black" {}
+		_MainTex ("Alpha (A)", 2D) = "white" {}
 	}
-	
+
 	SubShader
 	{
 		LOD 200
@@ -16,44 +16,43 @@ Shader "Unlit/Transparent Colored"
 			"RenderType" = "Transparent"
 			"DisableBatching" = "True"
 		}
-		
+
+		Cull Off
+		Lighting Off
+		ZWrite Off
+		Offset -1, -1
+		Fog { Mode Off }
+		Blend SrcAlpha OneMinusSrcAlpha
+
 		Pass
 		{
-			Cull Off
-			Lighting Off
-			ZWrite Off
-			Fog { Mode Off }
-			Offset -1, -1
-			Blend SrcAlpha OneMinusSrcAlpha
-
 			CGPROGRAM
 			#pragma vertex vert
-			#pragma fragment frag			
+			#pragma fragment frag
 			#include "UnityCG.cginc"
 
-			sampler2D _MainTex;
-			float4 _MainTex_ST;
-	
 			struct appdata_t
 			{
 				float4 vertex : POSITION;
+				half4 color : COLOR;
 				float2 texcoord : TEXCOORD0;
-				fixed4 color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
-	
+
 			struct v2f
 			{
 				float4 vertex : SV_POSITION;
-				half2 texcoord : TEXCOORD0;
-				fixed4 color : COLOR;
+				half4 color : COLOR;
+				float2 texcoord : TEXCOORD0;
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
-	
-			v2f o;
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
 
 			v2f vert (appdata_t v)
 			{
+				v2f o;
 				UNITY_SETUP_INSTANCE_ID(v);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				o.vertex = UnityObjectToClipPos(v.vertex);
@@ -61,10 +60,12 @@ Shader "Unlit/Transparent Colored"
 				o.color = v.color;
 				return o;
 			}
-				
-			fixed4 frag (v2f IN) : SV_Target
+
+			half4 frag (v2f i) : SV_Target
 			{
-				return tex2D(_MainTex, IN.texcoord) * IN.color;
+				half4 col = i.color;
+				col.a *= tex2D(_MainTex, i.texcoord).a;
+				return col;
 			}
 			ENDCG
 		}
@@ -72,30 +73,33 @@ Shader "Unlit/Transparent Colored"
 
 	SubShader
 	{
-		LOD 100
-
 		Tags
 		{
-			"Queue" = "Transparent"
-			"IgnoreProjector" = "True"
-			"RenderType" = "Transparent"
+			"Queue"="Transparent"
+			"IgnoreProjector"="True"
+			"RenderType"="Transparent"
 			"DisableBatching" = "True"
+		}
+		
+		Lighting Off
+		Cull Off
+		ZTest Always
+		ZWrite Off
+		Fog { Mode Off }
+		Blend SrcAlpha OneMinusSrcAlpha
+		
+		BindChannels
+		{
+			Bind "Color", color
+			Bind "Vertex", vertex
+			Bind "TexCoord", texcoord
 		}
 		
 		Pass
 		{
-			Cull Off
-			Lighting Off
-			ZWrite Off
-			Fog { Mode Off }
-			Offset -1, -1
-			//ColorMask RGB
-			Blend SrcAlpha OneMinusSrcAlpha
-			ColorMaterial AmbientAndDiffuse
-			
 			SetTexture [_MainTex]
-			{
-				Combine Texture * Primary
+			{ 
+				combine primary, texture
 			}
 		}
 	}

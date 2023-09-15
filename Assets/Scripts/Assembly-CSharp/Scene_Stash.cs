@@ -393,7 +393,7 @@ public class Scene_Stash : MonoBehaviour
 
 	public void TUIEvent_PageFrame(TUIControl control, int event_type, float wparam, float lparam, object data)
 	{
-		if (event_type == 1)
+		if (event_type == 1 && Application.isMobilePlatform)
 		{
 			popup_stash.SetGoodsControl(null);
 		}

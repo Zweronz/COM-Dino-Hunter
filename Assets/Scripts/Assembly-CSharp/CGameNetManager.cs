@@ -368,11 +368,11 @@ public class CGameNetManager : MonoBehaviour
 
 	public bool IsConnected()
 	{
-		//if (TNetManager.GetInstance() == null || TNetManager.GetInstance().Connection == null || TNetManager.GetInstance().Connection.GetStatus() != TNetObject.STATUS.kConnected)
-		//{
-		//	return false;
-		//}
-		return false;
+		if (TNetManager.GetInstance() == null || TNetManager.GetInstance().Connection == null || TNetManager.GetInstance().Connection.GetStatus() != TNetObject.STATUS.kConnected)
+		{
+			return false;
+		}
+		return true;
 	}
 
 	public bool IsLogin()

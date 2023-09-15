@@ -26,16 +26,16 @@ public class SequenceTask : Task
 	public override kTreeRunStatus OnUpdate(Object inputParam, float deltaTime)
 	{
 		CompositeNode compositeNode = GetCompositeNode();
-		kTreeRunStatus kTreeRunStatus;
 		if (compositeNode.GetChildCount() == 0)
 		{
-			return kTreeRunStatus.Failture;
+			return BehaviorTree.kTreeRunStatus.Failture;
 		}
 		if (!m_curBehavior.HasInstalled())
 		{
 			m_nCurChild = 0;
 			m_curBehavior.Install(compositeNode.GetChild(m_nCurChild));
 		}
+		kTreeRunStatus kTreeRunStatus;
 		while (true)
 		{
 			kTreeRunStatus = m_curBehavior.Update(inputParam, deltaTime);

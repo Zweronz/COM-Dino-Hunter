@@ -62,7 +62,7 @@ public class CControlWindows : CControlBase
 			float axis = Input.GetAxis("Mouse X");
 			if (axis != 0f)
 			{
-				m_Camera.Yaw(Mathf.Clamp(axis, -1f, 1f) * 270f * Time.deltaTime);
+				m_Camera.Yaw(axis * 270f * Time.deltaTime);
 				if (m_User.IsCanAim())
 				{
 					m_User.SetYaw(m_Camera.GetYaw());
@@ -71,7 +71,7 @@ public class CControlWindows : CControlBase
 			float axis2 = Input.GetAxis("Mouse Y");
 			if (axis2 != 0f)
 			{
-				m_Camera.Pitch(Mathf.Clamp(axis2, -1f, 1f) * 270f * Time.deltaTime);
+				m_Camera.Pitch(axis2 * 270f * Time.deltaTime);
 			}
 			if (Input.GetMouseButton(1))
 			{
@@ -103,22 +103,22 @@ public class CControlWindows : CControlBase
 			{
 				m_User.UseSkill(1, 1);
 			}
-			if (Input.GetKeyDown(KeyCode.Alpha2))
-			{
-				m_User.UseSkill(2, 1);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha3))
-			{
-				m_User.UseSkill(3, 1);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha4))
-			{
-				m_User.UseSkill(4, 1);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha5))
-			{
-				m_User.UseSkill(5, 1);
-			}
+			//if (Input.GetKeyDown(KeyCode.Alpha2))
+			//{
+			//	m_User.UseSkill(2, 1);
+			//}
+			//if (Input.GetKeyDown(KeyCode.Alpha3))
+			//{
+			//	m_User.UseSkill(3, 1);
+			//}
+			//if (Input.GetKeyDown(KeyCode.Alpha4))
+			//{
+			//	m_User.UseSkill(4, 1);
+			//}
+			//if (Input.GetKeyDown(KeyCode.Alpha5))
+			//{
+			//	m_User.UseSkill(5, 1);
+			//}
 		}
 		if (Input.GetKeyDown(KeyCode.Q))
 		{

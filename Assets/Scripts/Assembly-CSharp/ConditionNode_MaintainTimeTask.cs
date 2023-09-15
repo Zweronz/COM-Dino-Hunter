@@ -35,15 +35,15 @@ public class ConditionNode_MaintainTimeTask : Task
 	{
 		ConditionNode conditionNode = GetConditionNode();
 		Node child = conditionNode.GetChild();
-		kTreeRunStatus kTreeRunStatus = m_Behavior.Update(inputParam, deltaTime);
 		if (child == null)
 		{
-			return kTreeRunStatus.Failture;
+			return BehaviorTree.kTreeRunStatus.Failture;
 		}
 		if (!m_Behavior.HasInstalled())
 		{
 			m_Behavior.Install(child);
 		}
+		kTreeRunStatus kTreeRunStatus = m_Behavior.Update(inputParam, deltaTime);
 		if (kTreeRunStatus == kTreeRunStatus.Executing)
 		{
 			m_fTimeCount += deltaTime;

@@ -3,9 +3,17 @@ using UnityEngine;
 [AddComponentMenu("TUI/Control/Select Button")]
 public class TUIButtonSelect : TUIButton
 {
+	private TUIControl m_Control;
+
 	public const int CommandSelect = 1;
 
 	public int index;
+
+	private new void Start()
+	{
+		base.Start();
+		m_Control = (TUIControl)this;
+	}
 
 	public bool IsSelected()
 	{
@@ -17,6 +25,21 @@ public class TUIButtonSelect : TUIButton
 		m_bPressed = selected;
 		m_iFingerId = -1;
 		Show();
+	}
+
+	public override void Reset()
+	{
+		if (name.StartsWith("Btn_Item"))
+		{
+			m_Control.Reset();
+			m_bDisable = false;
+			m_bPressed = false;
+			Show();
+		}
+		else
+		{
+			base.Reset();
+		}
 	}
 
 	public override bool HandleInput(TUIInput input)

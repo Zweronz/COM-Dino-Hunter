@@ -7,6 +7,7 @@ SubShader {
  Tags { "QUEUE"="Transparent" }
  Pass {
   Tags { "QUEUE"="Transparent" }
+  Cull Off
   AlphaTest Greater 0.5
   SetTexture [_MainTex] { ConstantColor [_Color] combine texture * constant }
  }

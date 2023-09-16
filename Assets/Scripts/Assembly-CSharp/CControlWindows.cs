@@ -97,28 +97,12 @@ public class CControlWindows : CControlBase
 				}
 			}
 		}
-		if (m_User.IsCanAttack())
+		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			if (Input.GetKeyDown(KeyCode.Alpha1))
+			if (m_User.IsCanAttack() && !m_User.IsSkillCD())
 			{
-				m_User.UseSkill(1, 1);
+				m_User.UseSkill(m_User.SkillID, m_User.SkillLevel);
 			}
-			//if (Input.GetKeyDown(KeyCode.Alpha2))
-			//{
-			//	m_User.UseSkill(2, 1);
-			//}
-			//if (Input.GetKeyDown(KeyCode.Alpha3))
-			//{
-			//	m_User.UseSkill(3, 1);
-			//}
-			//if (Input.GetKeyDown(KeyCode.Alpha4))
-			//{
-			//	m_User.UseSkill(4, 1);
-			//}
-			//if (Input.GetKeyDown(KeyCode.Alpha5))
-			//{
-			//	m_User.UseSkill(5, 1);
-			//}
 		}
 		if (Input.GetKeyDown(KeyCode.Q))
 		{

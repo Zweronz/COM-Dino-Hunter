@@ -853,7 +853,7 @@ public class iGameSceneBase
 				}
 			}
 		}
-		CSoundScene.GetInstance().PlayBGM(m_curGameLevelInfo.sBGM);
+		CSoundScene.GetInstance().PlayBGM(GetBGM());
 		CSoundScene.GetInstance().PlayAmbienceBGM(m_curGameLevelInfo.sBGMAmbience);
 		m_CameraTrail.Initialize(m_User, !flag);
 		m_CameraTrail.SetRotateLimit(-10f, 60f, 0f, 0f);
@@ -921,6 +921,23 @@ public class iGameSceneBase
 		AndroidReturnPlugin.instance.SetIngamePause(m_GameUI.Event_Pause);
 		AndroidReturnPlugin.instance.SetIngameContinue(m_GameUI.Event_Pause_Close);
 		AndroidReturnPlugin.instance.SetIngamePause(false);
+	}
+
+	private string GetBGM()
+	{
+		switch (Application.loadedLevelName)
+		{
+			case "SceneLava":
+			case "SceneLava2":
+				return "BGM_Map03";
+
+			case "SceneIce":
+			case "SceneSnow":
+				return "BGM_Map02";
+
+			default:
+				return "BGM_Map01";
+		}
 	}
 
 	public void RestartGame()
@@ -3355,7 +3372,7 @@ public class iGameSceneBase
 		if (!m_bMutiplyGame)
 		{
 			m_GameUI.ShowRevive(false, 0f);
-			CSoundScene.GetInstance().PlayBGM(m_curGameLevelInfo.sBGM);
+			CSoundScene.GetInstance().PlayBGM(GetBGM());
 			CSoundScene.GetInstance().PlayAmbienceBGM(m_curGameLevelInfo.sBGMAmbience);
 		}
 		else

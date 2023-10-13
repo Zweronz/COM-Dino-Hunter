@@ -37,16 +37,13 @@ public class iAchievementCenter : iBaseCenter
 	{
 		if (m_dictAchievementInfo.Count == 0)
 		{
-			Debug.LogError("HELP!!...");
 			LoadData(SpoofedData.LoadSpoof("achievement"));
 		}
 		List<CAchievementInfo> list = new List<CAchievementInfo>();
 		foreach (CAchievementInfo value in m_dictAchievementInfo.Values)
 		{
-			Debug.LogError("HELP!!");
 			if ((nType == -1 || nType == value.nType) && value.isDaily)
 			{
-				Debug.LogError("alo team ???");
 				list.Add(value);
 			}
 		}

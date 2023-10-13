@@ -539,7 +539,7 @@ public class Scene_MainMenu : MonoBehaviour
 			{
 				if (popup_sale != null)
 				{
-					popup_sale.Show();
+					//popup_sale.Show();
 					AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_CloseSale);
 				}
 			}
@@ -1047,7 +1047,7 @@ public class Scene_MainMenu : MonoBehaviour
 			}
 			if (popup_sale != null)
 			{
-				popup_sale.Show();
+				//popup_sale.Show();
 				AndroidReturnPlugin.instance.SetCurFunc(TUIEvent_CloseSale);
 			}
 		}

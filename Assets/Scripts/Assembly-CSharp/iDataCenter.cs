@@ -2669,7 +2669,6 @@ public class iDataCenter
 			Debug.LogError("dailyrask is null/..");
 			return;
 		}
-		Debug.LogError("HELLLOOOO ? ? ? ? ?");
 		List<CAchievementInfo> dailyAchievementList = achievementCenter.GetDailyAchievementList();
 		if (dailyAchievementList == null || dailyAchievementList.Count < 1)
 		{

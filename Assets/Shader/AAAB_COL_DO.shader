@@ -23,21 +23,5 @@ SubShader {
   SetTexture [_MainTex] { ConstantColor [_Color] combine constant * primary }
   SetTexture [_MainTex] { combine texture * previous double }
  }
- Pass {
-  Tags { "QUEUE"="Transparent" }
-  BindChannels {
-   Bind "vertex", Vertex
-   Bind "color", Color
-   Bind "texcoord", TexCoord
-  }
-  ZWrite Off
-  Cull Off
-  Fog {
-   Color (0,0,0,0)
-  }
-  Blend SrcAlpha OneMinusSrcAlpha
-  SetTexture [_MainTex2] { ConstantColor [_Color2] combine constant * primary }
-  SetTexture [_MainTex2] { combine texture * previous double }
- }
 }
 }

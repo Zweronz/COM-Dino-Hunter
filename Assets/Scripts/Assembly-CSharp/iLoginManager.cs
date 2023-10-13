@@ -90,6 +90,7 @@ public class iLoginManager : MonoBehaviour
 
 	private void Start()
 	{
+		OnFetchConfigSuccess();
 	}
 
 	private void Update()
@@ -347,10 +348,10 @@ public class iLoginManager : MonoBehaviour
 
 	protected void OnFetchConfigSuccess()
 	{
-		if (m_State != kState.Timeout)
-		{
+		//if (m_State != kState.Timeout)
+		//{
 			iServerTime.GetInstance().GetServerTime(OnGetServerTime_S, OnGetServerTime_F);
-		}
+		//}
 	}
 
 	protected void OnFetchConfigFailed()
@@ -365,10 +366,10 @@ public class iLoginManager : MonoBehaviour
 
 	protected void OnGetServerTime_S(double millionseconds)
 	{
-		if (m_State == kState.Timeout)
-		{
-			return;
-		}
+		//if (m_State == kState.Timeout)
+		//{
+		//	return;
+		//}
 		iGameData gameData = iGameApp.GetInstance().m_GameData;
 		if (gameData == null)
 		{

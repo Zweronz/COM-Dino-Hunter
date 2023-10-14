@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<root>
+    <discount>
+        <node type="1" id="27" discount="50"/>
+        <node type="1" id="29" discount="50"/>
+        <node type="1" id="34" discount="50"/>
+    </discount>
+
+    <worldmonster>
+        <node mobid="19" dailymax="2" rate="10" ratetypelimit="0" refreshtime="-0.1,-0.1"/>
+        <node mobid="20" dailymax="1" rate="5" ratetypelimit="0" refreshtime="-0.1,-0.1"/>
+    </worldmonster>
+</root>

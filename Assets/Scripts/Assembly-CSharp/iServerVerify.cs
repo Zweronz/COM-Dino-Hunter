@@ -240,7 +240,7 @@ public class iServerVerify : MonoBehaviour
 				return;
 			}
 			string value = string.Empty;
-			foreach (XmlNode item2 in documentElement)
+			foreach (XmlNode item2 in documentElement.ChildNodes)
 			{
 				if (item2.Name == "common")
 				{
@@ -726,6 +726,9 @@ public class iServerVerify : MonoBehaviour
 		//	m_PingState = kPingState.Success;
 		//	if (m_OnSuccess != null)
 		//	{
+				XmlDocument document = new XmlDocument();
+				document.LoadXml(SpoofedData.LoadSpoof("serverspoof"));
+				m_ServerConfigInfo.LoadData(document);
 				m_OnSuccess();
 				yield break;
 			//}

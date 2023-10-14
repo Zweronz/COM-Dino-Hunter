@@ -18,6 +18,10 @@ public class DebugGUI : MonoBehaviour
 
 	private void OnGUI()
 	{
+		if (!Application.isEditor)
+		{
+			return;
+		}
 		GUI.color = Color.green;
 		for (int i = 0; i < m_DebugList.Count; i++)
 		{
@@ -34,6 +38,10 @@ public class DebugGUI : MonoBehaviour
 
 	public void Debug(string str)
 	{
+		if (!Application.isEditor)
+		{
+			return;
+		}
 		m_DebugList.Insert(0, str);
 		if (m_DebugList.Count > m_nMaxCount)
 		{

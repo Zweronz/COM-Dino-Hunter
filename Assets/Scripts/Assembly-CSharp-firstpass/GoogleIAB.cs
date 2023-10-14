@@ -6,95 +6,95 @@ public class GoogleIAB
 
 	static GoogleIAB()
 	{
-		if (Application.platform != RuntimePlatform.Android)
-		{
-			return;
-		}
-		using (AndroidJavaClass androidJavaClass = new AndroidJavaClass("com.prime31.GoogleIABPlugin"))
-		{
-			_plugin = androidJavaClass.CallStatic<AndroidJavaObject>("instance", new object[0]);
-		}
+		//if (Application.platform != RuntimePlatform.Android)
+		//{
+		//	return;
+		//}
+		//using (AndroidJavaClass androidJavaClass = new AndroidJavaClass("com.prime31.GoogleIABPlugin"))
+		//{
+		//	_plugin = androidJavaClass.CallStatic<AndroidJavaObject>("instance", new object[0]);
+		//}
 	}
 
 	public static void enableLogging(bool shouldEnable)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			if (shouldEnable)
-			{
-				Debug.LogWarning("YOU HAVE ENABLED HIGH DETAIL LOGS. DO NOT DISTRIBUTE THE GENERATED APK PUBLICLY. IT WILL DUMP SENSITIVE INFORMATION TO THE CONSOLE!");
-			}
-			_plugin.Call("enableLogging", shouldEnable);
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	if (shouldEnable)
+		//	{
+		//		Debug.LogWarning("YOU HAVE ENABLED HIGH DETAIL LOGS. DO NOT DISTRIBUTE THE GENERATED APK PUBLICLY. IT WILL DUMP SENSITIVE INFORMATION TO THE CONSOLE!");
+		//	}
+		//	_plugin.Call("enableLogging", shouldEnable);
+		//}
 	}
 
 	public static void setAutoVerifySignatures(bool shouldVerify)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("setAutoVerifySignatures", shouldVerify);
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("setAutoVerifySignatures", shouldVerify);
+		//}
 	}
 
 	public static void init(string publicKey)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("init", publicKey);
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("init", publicKey);
+		//}
 	}
 
 	public static void unbindService()
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("unbindService");
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("unbindService");
+		//}
 	}
 
 	public static bool areSubscriptionsSupported()
 	{
-		if (Application.platform != RuntimePlatform.Android)
-		{
+		//if (Application.platform != RuntimePlatform.Android)
+		//{
 			return false;
-		}
-		return _plugin.Call<bool>("areSubscriptionsSupported", new object[0]);
+		//}
+		//return _plugin.Call<bool>("areSubscriptionsSupported", new object[0]);
 	}
 
 	public static void queryInventory(string[] skus)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("queryInventory", new object[1] { skus });
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("queryInventory", new object[1] { skus });
+		//}
 	}
 
 	public static void purchaseProduct(string sku)
 	{
-		purchaseProduct(sku, string.Empty);
+		//purchaseProduct(sku, string.Empty);
 	}
 
 	public static void purchaseProduct(string sku, string developerPayload)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("purchaseProduct", sku, developerPayload);
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("purchaseProduct", sku, developerPayload);
+		//}
 	}
 
 	public static void consumeProduct(string sku)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("consumeProduct", sku);
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("consumeProduct", sku);
+		//}
 	}
 
 	public static void consumeProducts(string[] skus)
 	{
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			_plugin.Call("consumeProducts", new object[1] { skus });
-		}
+		//if (Application.platform == RuntimePlatform.Android)
+		//{
+		//	_plugin.Call("consumeProducts", new object[1] { skus });
+		//}
 	}
 }

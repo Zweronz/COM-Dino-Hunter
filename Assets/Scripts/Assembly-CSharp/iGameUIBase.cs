@@ -896,7 +896,7 @@ public class iGameUIBase : MonoBehaviour
 		{
 			m_UIAimCross.gameObject.SetActiveRecursively(true);
 		}
-		if (m_UIManager.mPause != null && !m_GameScene.isTutorialStage && !CGameNetManager.GetInstance().IsConnected())
+		if (m_UIManager.mPause != null && !m_GameScene.isTutorialStage)
 		{
 			m_UIManager.mPause.gameObject.SetActiveRecursively(true);
 		}
@@ -1388,7 +1388,7 @@ public class iGameUIBase : MonoBehaviour
 	{
 		Debug.Log("click pause");
 		CUISound.GetInstance().Play("UI_Button");
-		if (!m_GameScene.m_bMutiplyGame && !m_GameScene.isTutorialStage)
+		if (/*!m_GameScene.m_bMutiplyGame && */!m_GameScene.isTutorialStage)
 		{
 			m_GameScene.SetGamePause(true);
 		}
@@ -1497,15 +1497,15 @@ public class iGameUIBase : MonoBehaviour
 	public void Event_Pause_Close()
 	{
 		CUISound.GetInstance().Play("UI_Cancle");
-		if (!m_GameScene.m_bMutiplyGame)
-		{
+		//if (!m_GameScene.m_bMutiplyGame)
+		//{
 			iDataCenter dataCenter = m_GameData.GetDataCenter();
 			if (dataCenter != null)
 			{
 				dataCenter.Save();
 			}
 			m_GameScene.SetGamePause(false);
-		}
+		//}
 	}
 
 	protected void Event_Move(bool bPressed)

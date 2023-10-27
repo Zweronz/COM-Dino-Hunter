@@ -5888,6 +5888,7 @@ public class TUIDataServer
 						m_DataCenterNet.Save();
 					}
 					Debug.Log(" start " + CGameNetManager.GetInstance().UserName);
+					CGameNetManager.GetInstance().connected = true;
 					if (!CGameNetManager.GetInstance().IsConnected())
 					{
 						iServerVerify.CServerConfigInfo serverConfigInfo = iServerVerify.GetInstance().GetServerConfigInfo();
@@ -6075,24 +6076,27 @@ public class TUIDataServer
 			else if (m_event.GetEventName() == TUIEvent.SceneCoopRoomEventType.TUIEvent_GameStartYes)
 			{
 				CGameNetManager.GetInstance().MutiplyState = CGameNetManager.kMutiplyState.Gaming;
-				TNetRoom curRoom2 = CGameNetManager.GetInstance().GetCurRoom();
-				if (curRoom2 != null && curRoom2.RoomMaster.IsItMe)
-				{
-					int num3 = CGameNetManager.GetInstance().m_nCurRoomGameLevelID;
-					if (num3 == 0 && m_GameData.m_HunterLevelCenter != null)
-					{
+				//TNetRoom curRoom2 = CGameNetManager.GetInstance().GetCurRoom();
+				//if (curRoom2 != null && curRoom2.RoomMaster.IsItMe)
+				//{
+					int num3 = 0;//CGameNetManager.GetInstance().m_nCurRoomGameLevelID;
+				//	if (num3 == 0 && m_GameData.m_HunterLevelCenter != null)
+				//	{
 						CHunterLevelInfo cHunterLevelInfo2 = m_GameData.m_HunterLevelCenter.Get(m_DataCenter.HunterLvl);
 						if (cHunterLevelInfo2 != null)
 						{
 							num3 = cHunterLevelInfo2.GetGameLevel();
 						}
-					}
-					if (num3 > 0)
-					{
+					//}
+					//if (num3 > 0)
+					//{
 						iGameApp.GetInstance().ScreenLog("play game !!! " + num3);
-						CGameNetSender.GetInstance().SendMsg_GAME_ENTER(num3, m_DataCenter.HunterLvl, curRoom2);
-					}
-				}
+						m_GameState.GameLevel = num3;
+						m_GameState.m_nCurHunterLevelID = m_DataCenter.HunterLvl * 2;
+						iGameApp.GetInstance().EnterScene(kGameSceneEnum.Game);
+						//CGameNetSender.GetInstance().SendMsg_GAME_ENTER(num3, m_DataCenter.HunterLvl, curRoom2);
+					//}
+				//}
 				global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneCoopRoom(TUIEvent.SceneCoopRoomEventType.TUIEvent_GameStart, true));
 			}
 			else if (m_event.GetEventName() == TUIEvent.SceneCoopRoomEventType.TUIEvent_GameStartCancel)

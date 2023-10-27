@@ -221,7 +221,8 @@ public class CGameNetManager : MonoBehaviour
 	{
 		get
 		{
-			return m_bGaming;
+			return true;
+			//return m_bGaming;
 		}
 		set
 		{
@@ -366,13 +367,16 @@ public class CGameNetManager : MonoBehaviour
 		m_dictNetUserInfo.Clear();
 	}
 
+	public bool connected { get; set; }
+
 	public bool IsConnected()
 	{
-		if (TNetManager.GetInstance() == null || TNetManager.GetInstance().Connection == null || TNetManager.GetInstance().Connection.GetStatus() != TNetObject.STATUS.kConnected)
-		{
-			return false;
-		}
-		return true;
+		return connected;
+		//if (TNetManager.GetInstance() == null || TNetManager.GetInstance().Connection == null || TNetManager.GetInstance().Connection.GetStatus() != TNetObject.STATUS.kConnected)
+		//{
+		//	return false;
+		//}
+		//return true;
 	}
 
 	public bool IsLogin()
@@ -382,6 +386,7 @@ public class CGameNetManager : MonoBehaviour
 
 	public bool IsRoomMaster()
 	{
+		return true;
 		if (TNetManager.GetInstance().Connection == null || TNetManager.GetInstance().Connection.CurRoom == null)
 		{
 			return true;

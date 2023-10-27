@@ -258,14 +258,16 @@ public class Scene_CoopMainMenu : MonoBehaviour
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Start)
 		{
-			if (m_event.GetControlSuccess())
-			{
+			CGameNetManager.GetInstance().connected = true;
+			CGameNetManager.GetInstance().IsGaming = true;
+			//if (m_event.GetControlSuccess())
+			//{
 				DoSceneChange(m_event.GetWparam(), "Scene_CoopRoom");
 				return;
-			}
-			m_fade_in_time = 0f;
-			do_fade_in = false;
-			m_fade.FadeIn();
+			//}
+			//m_fade_in_time = 0f;
+			//do_fade_in = false;
+			//m_fade.FadeIn();
 		}
 		else if (m_event.GetEventName() == TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Back)
 		{
@@ -504,6 +506,8 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			{
 				CUISound.GetInstance().Play("UI_Button");
 			}
+			CGameNetManager.GetInstance().connected = true;
+			DoSceneChange(0, "Scene_CoopRoom");
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Start));
 		}
 	}
@@ -606,6 +610,8 @@ public class Scene_CoopMainMenu : MonoBehaviour
 			{
 				CUISound.GetInstance().Play("UI_Button");
 			}
+			CGameNetManager.GetInstance().connected = true;
+			DoSceneChange(0, "Scene_CoopRoom");
 			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Start));
 		}
 	}

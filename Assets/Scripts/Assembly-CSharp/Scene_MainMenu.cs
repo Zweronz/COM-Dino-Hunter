@@ -132,6 +132,7 @@ public class Scene_MainMenu : MonoBehaviour
 
 	private void Awake()
 	{
+		CGameNetManager.GetInstance().connected = false;
 		TUIDataServer.Instance().Initialize();
 		global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMainMenu>(TUIEvent_SetUIInfo);
 		camera_village.SetCurrentAngle(TUIMappingInfo.Instance().GetCurrentAngle());

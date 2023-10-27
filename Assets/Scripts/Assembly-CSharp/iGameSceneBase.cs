@@ -1277,30 +1277,30 @@ public class iGameSceneBase
 		m_GameState.m_nCurHunterLevel = m_DataCenter.HunterLvl;
 		if (CGameNetManager.GetInstance().IsConnected())
 		{
-			int nBeadmireCount = 0;
-			if (m_DataCenter != null)
-			{
-				nBeadmireCount = m_DataCenter.BeAdmire;
-			}
-			float num3 = 1f;
-			CCharacterInfoLevel characterInfo = m_GameData.GetCharacterInfo(m_User.ID, m_User.Level + 1);
-			if (characterInfo != null)
-			{
-				num3 = Mathf.Clamp01((float)m_User.EXP / (float)characterInfo.nExp);
-			}
-			CGameNetManager.CNetUserInfo netUserInfo = CGameNetManager.GetInstance().GetNetUserInfo();
-			if (netUserInfo != null)
-			{
-				netUserInfo.m_nCombatRatings = CalcCombatRating();
-				netUserInfo.m_nGainCrystalInGame = m_GameState.GainCrystalInGame;
-				netUserInfo.m_nGainGoldInGame = num2;
-				netUserInfo.m_nBeadmireCount = nBeadmireCount;
-				netUserInfo.m_nCharLvlResult = m_User.Level;
-				netUserInfo.m_nCharExpResult = m_User.EXP;
-				netUserInfo.m_nHunterLvlResult = m_DataCenter.HunterLvl;
-				netUserInfo.m_nHunterExpResult = m_DataCenter.HunterExp;
-			}
-			CGameNetSender.GetInstance().SendMsg_BATTLE_RESULT_PLAYERREWARDS(netUserInfo.m_nTitle, netUserInfo.m_nCombatRatings, m_GameState.GainCrystalInGame, num2, nBeadmireCount, m_User.Level, m_User.EXP, m_DataCenter.HunterLvl, m_DataCenter.HunterExp);
+			//int nBeadmireCount = 0;
+			//if (m_DataCenter != null)
+			//{
+			//	nBeadmireCount = m_DataCenter.BeAdmire;
+			//}
+			//float num3 = 1f;
+			//CCharacterInfoLevel characterInfo = m_GameData.GetCharacterInfo(m_User.ID, m_User.Level + 1);
+			//if (characterInfo != null)
+			//{
+			//	num3 = Mathf.Clamp01((float)m_User.EXP / (float)characterInfo.nExp);
+			//}
+			//CGameNetManager.CNetUserInfo netUserInfo = CGameNetManager.GetInstance().GetNetUserInfo();
+			//if (netUserInfo != null)
+			//{
+			//	netUserInfo.m_nCombatRatings = CalcCombatRating();
+			//	netUserInfo.m_nGainCrystalInGame = m_GameState.GainCrystalInGame;
+			//	netUserInfo.m_nGainGoldInGame = num2;
+			//	netUserInfo.m_nBeadmireCount = nBeadmireCount;
+			//	netUserInfo.m_nCharLvlResult = m_User.Level;
+			//	netUserInfo.m_nCharExpResult = m_User.EXP;
+			//	netUserInfo.m_nHunterLvlResult = m_DataCenter.HunterLvl;
+			//	netUserInfo.m_nHunterExpResult = m_DataCenter.HunterExp;
+			//}
+			//CGameNetSender.GetInstance().SendMsg_BATTLE_RESULT_PLAYERREWARDS(netUserInfo.m_nTitle, netUserInfo.m_nCombatRatings, m_GameState.GainCrystalInGame, num2, nBeadmireCount, m_User.Level, m_User.EXP, m_DataCenter.HunterLvl, m_DataCenter.HunterExp);
 		}
 		m_User.SetFire(false);
 		m_User.MoveStop();
@@ -1331,6 +1331,7 @@ public class iGameSceneBase
 
 	public virtual void LeaveGame(float fDelayTime = 0f, kGameSceneEnum leavegamescene = kGameSceneEnum.None)
 	{
+		Debug.LogError(leavegamescene);
 		m_Status = kGameStatus.GameLeave;
 		m_StatusTime = fDelayTime;
 		m_StatusTimeCount = 0f;
@@ -1591,11 +1592,11 @@ public class iGameSceneBase
 		}
 		m_Status = kGameStatus.None;
 		m_StatusTimeCount = 0f;
-		if (CGameNetManager.GetInstance().IsConnected())
-		{
-			TNetManager.GetInstance().LeaveRoom();
-			return;
-		}
+		//if (CGameNetManager.GetInstance().IsConnected())
+		//{
+		//	TNetManager.GetInstance().LeaveRoom();
+		//	return;
+		//}
 		if (m_LeaveGameScene == kGameSceneEnum.None)
 		{
 			m_LeaveGameScene = kGameSceneEnum.Home;
@@ -1973,12 +1974,18 @@ public class iGameSceneBase
 					if (iGameTaskUIHunterList2 != null)
 					{
 						iGameTaskUIHunterList2.SetLevel(component.ID, component.Level);
+						bossHP = component.MaxHP;
+						bossLvl = component.Level;
 					}
 				}
 			}
 		}
 		return component;
 	}
+
+	private float bossHP;
+
+	private float bossLvl;
 
 	public CCharUser AddUser(int nID, int nUID, Vector3 v3Pos, Vector3 v3Dir)
 	{
@@ -3005,7 +3012,7 @@ public class iGameSceneBase
 
 	public void SetPause(bool bPause)
 	{
-		if ((TNetManager.GetInstance().Connection != null && bPause) || m_bPause == bPause)
+		if (/*(TNetManager.GetInstance().Connection != null && bPause) || */m_bPause == bPause)
 		{
 			return;
 		}
@@ -3541,151 +3548,127 @@ public class iGameSceneBase
 
 	public void ShowGameOverUI_Win_Mutiply()
 	{
+		m_GameState.AddCrystal(Mathf.Clamp(Mathf.FloorToInt(bossHP / 1000f / Mathf.Clamp(bossLvl / 4, 1, 15)), 1, 5));
+		int num2 = m_GameState.m_nLevelRewardGold + m_GameState.GainGoldInGame;
+		int nBeadmireCount = 0;
+		if (m_DataCenter != null)
+		{
+			nBeadmireCount = m_DataCenter.BeAdmire;
+		}
+		float num3 = 1f;
+		CCharacterInfoLevel characterInfo = m_GameData.GetCharacterInfo(m_User.ID, m_User.Level + 1);
+		if (characterInfo != null)
+		{
+			num3 = Mathf.Clamp01((float)m_User.EXP / (float)characterInfo.nExp);
+		}
+		int nCombatRatings = CalcCombatRating();
+		int nGainCrystalInGame = m_GameState.GainCrystalInGame;
+		int nGainGoldInGame = num2;
+		int nCharLvlResult = m_User.Level;
+		int nCharExpResult = m_User.EXP;
+		int nHunterLvlResult = m_DataCenter.HunterLvl;
+		int nHunterExpResult = m_DataCenter.HunterExp;
 		m_GameOverUIStatus = kGameOverUIStatus.Win_Mutiply;
 		m_GameUI.ShowSuccessMutiply(true);
-		Dictionary<int, CGameNetManager.CNetUserInfo> netUserInfoData = CGameNetManager.GetInstance().GetNetUserInfoData();
-		CGameNetManager.CNetUserInfo[] array = new CGameNetManager.CNetUserInfo[3];
-		int num = 0;
-		foreach (CGameNetManager.CNetUserInfo value in netUserInfoData.Values)
+		m_GameState.m_nMVPGold = Mathf.FloorToInt((float)nGainGoldInGame * 0.2f);
+		m_GameState.m_nMVPCrystal = Mathf.FloorToInt((float)nGainCrystalInGame * 0.2f);
+		m_DataCenter.AddGold(m_GameState.m_nMVPGold);
+		m_DataCenter.AddCrystal(m_GameState.m_nMVPCrystal);
+		gyUIPlayerRewards panelMissionSuccessMutiply_PlayerRewards = m_GameUI.GetPanelMissionSuccessMutiply_PlayerRewards(0);
+		if (panelMissionSuccessMutiply_PlayerRewards == null)
 		{
-			if (num >= netUserInfoData.Count)
+			return;
+		}
+		if (panelMissionSuccessMutiply_PlayerRewards.m_PlayerName != null)
+		{
+			panelMissionSuccessMutiply_PlayerRewards.m_PlayerName.text = m_User.m_sName;
+		}
+		//if (panelMissionSuccessMutiply_PlayerRewards.m_PlayerPhoto != null)
+		//{
+		//	CNameCardInfo nameCardInfo = m_DataCenterNet.GetNameCardInfo(m_User.m_sDeivceId);
+		//	if (nameCardInfo != null && nameCardInfo.GetPhoto() != null)
+		//	{
+		//		iGameApp.GetInstance().ScreenLog(nameCardInfo.m_sNickName + " set photo");
+		//		panelMissionSuccessMutiply_PlayerRewards.m_PlayerPhoto.mainTexture = nameCardInfo.GetPhoto();
+		//	}
+		//}
+		if (panelMissionSuccessMutiply_PlayerRewards.m_PlayerTitle != null)
+		{
+			panelMissionSuccessMutiply_PlayerRewards.m_PlayerTitle.text = string.Empty;
+			if (m_GameData.m_TitleCenter != null)
 			{
-				Debug.LogError("why exist more than 3 players?");
-				break;
-			}
-			if (CGameNetManager.GetInstance().IsMe(value.m_nId) || value.m_nCombatRatings != 0)
-			{
-				array[num++] = value;
+				CTitleInfo cTitleInfo = m_GameData.m_TitleCenter.Get(m_DataCenter.Title);
+				if (cTitleInfo != null)
+				{
+					panelMissionSuccessMutiply_PlayerRewards.m_PlayerTitle.text = cTitleInfo.sName;
+				}
 			}
 		}
-		CGameNetManager.CNetUserInfo cNetUserInfo = null;
-		for (int i = 0; i < array.Length - 1; i++)
+		if (panelMissionSuccessMutiply_PlayerRewards.m_AdmireCount != null)
 		{
-			for (int j = i + 1; j < array.Length; j++)
-			{
-				if (array[i] != null && array[j] != null && array[i].m_nCombatRatings < array[j].m_nCombatRatings)
-				{
-					cNetUserInfo = array[i];
-					array[i] = array[j];
-					array[j] = cNetUserInfo;
-				}
-			}
+			panelMissionSuccessMutiply_PlayerRewards.m_AdmireCount.Value = nBeadmireCount;
 		}
-		if (array[0] != null)
+		if (panelMissionSuccessMutiply_PlayerRewards.m_BattleRate != null)
 		{
-			m_GameState.m_nMVPGold = Mathf.FloorToInt((float)array[0].m_nGainGoldInGame * 0.2f);
-			m_GameState.m_nMVPCrystal = Mathf.FloorToInt((float)array[0].m_nGainCrystalInGame * 0.2f);
-			if (CGameNetManager.GetInstance().IsMe(array[0].m_nId))
-			{
-				m_DataCenter.AddGold(m_GameState.m_nMVPGold);
-				m_DataCenter.AddCrystal(m_GameState.m_nMVPCrystal);
-			}
+			panelMissionSuccessMutiply_PlayerRewards.m_BattleRate.Value = nCombatRatings;
 		}
-		for (int k = 0; k < array.Length; k++)
+		if (panelMissionSuccessMutiply_PlayerRewards.m_Gold != null)
 		{
-			cNetUserInfo = array[k];
-			if (cNetUserInfo == null)
-			{
-				continue;
-			}
-			gyUIPlayerRewards panelMissionSuccessMutiply_PlayerRewards = m_GameUI.GetPanelMissionSuccessMutiply_PlayerRewards(k);
-			if (panelMissionSuccessMutiply_PlayerRewards == null)
-			{
-				break;
-			}
-			cNetUserInfo.m_nResultIndex = k;
-			if (panelMissionSuccessMutiply_PlayerRewards.m_PlayerName != null)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_PlayerName.text = cNetUserInfo.m_sName;
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_PlayerPhoto != null)
-			{
-				CNameCardInfo nameCardInfo = m_DataCenterNet.GetNameCardInfo(cNetUserInfo.m_sDeivceId);
-				if (nameCardInfo != null && nameCardInfo.GetPhoto() != null)
-				{
-					iGameApp.GetInstance().ScreenLog(nameCardInfo.m_sNickName + " set photo");
-					panelMissionSuccessMutiply_PlayerRewards.m_PlayerPhoto.mainTexture = nameCardInfo.GetPhoto();
-				}
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_PlayerTitle != null)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_PlayerTitle.text = string.Empty;
-				if (m_GameData.m_TitleCenter != null)
-				{
-					CTitleInfo cTitleInfo = m_GameData.m_TitleCenter.Get(cNetUserInfo.m_nTitle);
-					if (cTitleInfo != null)
-					{
-						panelMissionSuccessMutiply_PlayerRewards.m_PlayerTitle.text = cTitleInfo.sName;
-					}
-				}
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_AdmireCount != null)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_AdmireCount.Value = cNetUserInfo.m_nBeadmireCount;
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_BattleRate != null)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_BattleRate.Value = cNetUserInfo.m_nCombatRatings;
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_Gold != null)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_Gold.Value = cNetUserInfo.m_nGainGoldInGame;
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_Crystal != null)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_Crystal.Value = cNetUserInfo.m_nGainCrystalInGame;
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_CharExp != null)
-			{
-				float barValue = 0f;
-				float fCurRate = 0f;
-				int num2 = 1;
-				int num3 = 1;
-				CCharacterInfo characterInfo = m_GameData.GetCharacterInfo(cNetUserInfo.m_nCharID);
-				if (characterInfo != null)
-				{
-					num2 = cNetUserInfo.m_nCharLvl;
-					barValue = characterInfo.GetExpRate(cNetUserInfo.m_nCharExp, num2);
-					num3 = cNetUserInfo.m_nCharLvlResult;
-					fCurRate = characterInfo.GetExpRate(cNetUserInfo.m_nCharExpResult, num3);
-				}
-				panelMissionSuccessMutiply_PlayerRewards.m_CharExp.Level = num2;
-				panelMissionSuccessMutiply_PlayerRewards.m_CharExp.BarValue = barValue;
-				panelMissionSuccessMutiply_PlayerRewards.m_CharExp.SetAnimation(fCurRate, num3);
-			}
-			if (panelMissionSuccessMutiply_PlayerRewards.m_HunterExp != null)
-			{
-				float barValue2 = 0f;
-				float fCurRate2 = 0f;
-				int num4 = 1;
-				int num5 = 1;
-				if (m_GameData.m_HunterCenter != null)
-				{
-					num4 = cNetUserInfo.m_nHunterLvl;
-					barValue2 = m_GameData.m_HunterCenter.GetExpRate(cNetUserInfo.m_nHunterExp, num4 + 1);
-					num5 = cNetUserInfo.m_nHunterLvlResult;
-					fCurRate2 = m_GameData.m_HunterCenter.GetExpRate(cNetUserInfo.m_nHunterExpResult, num5 + 1);
-				}
-				panelMissionSuccessMutiply_PlayerRewards.m_HunterExp.Level = num4;
-				panelMissionSuccessMutiply_PlayerRewards.m_HunterExp.BarValue = barValue2;
-				panelMissionSuccessMutiply_PlayerRewards.m_HunterExp.SetAnimation(fCurRate2, num5);
-			}
-			CCharPlayer player = GetPlayer(cNetUserInfo.m_nUID);
-			if (player != null && player.isDead)
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_PlayerDeathFlag.enabled = true;
-			}
-			else
-			{
-				panelMissionSuccessMutiply_PlayerRewards.m_PlayerDeathFlag.enabled = false;
-			}
-			panelMissionSuccessMutiply_PlayerRewards.Show(true);
-			if (cNetUserInfo == CGameNetManager.GetInstance().GetNetUserInfo())
-			{
-				Debug.Log("hide admire");
-				panelMissionSuccessMutiply_PlayerRewards.m_Admire.Enable = false;
-			}
+			panelMissionSuccessMutiply_PlayerRewards.m_Gold.Value = nGainGoldInGame;
 		}
+		if (panelMissionSuccessMutiply_PlayerRewards.m_Crystal != null)
+		{
+			panelMissionSuccessMutiply_PlayerRewards.m_Crystal.Value = nGainCrystalInGame;
+		}
+		if (panelMissionSuccessMutiply_PlayerRewards.m_CharExp != null)
+		{
+			float barValue = 0f;
+			float fCurRate = 0f;
+			int num4 = 1;
+			int num5 = 1;
+			CCharacterInfo characterInfo2 = m_GameData.GetCharacterInfo(m_DataCenter.CurCharID);
+			if (characterInfo2 != null)
+			{
+				num4 = m_DataCenter.GetCharacter(m_DataCenter.CurCharID).nLevel;
+				barValue = characterInfo2.GetExpRate(m_DataCenter.GetCharacter(m_DataCenter.CurCharID).nExp, num4);
+				num5 = m_User.Level;
+				fCurRate = characterInfo2.GetExpRate(m_User.EXP, num5);
+			}
+			panelMissionSuccessMutiply_PlayerRewards.m_CharExp.Level = num4;
+			panelMissionSuccessMutiply_PlayerRewards.m_CharExp.BarValue = barValue;
+			panelMissionSuccessMutiply_PlayerRewards.m_CharExp.SetAnimation(fCurRate, num5);
+		}
+		if (panelMissionSuccessMutiply_PlayerRewards.m_HunterExp != null)
+		{
+			float barValue2 = 0f;
+			float fCurRate2 = 0f;
+			int num4 = 1;
+			int num5 = 1;
+			if (m_GameData.m_HunterCenter != null)
+			{
+				num4 = m_DataCenter.HunterLvl;
+				barValue2 = m_GameData.m_HunterCenter.GetExpRate(m_DataCenter.HunterExp, num4 + 1);
+				num5 = m_DataCenter.HunterLvl;
+				fCurRate2 = m_GameData.m_HunterCenter.GetExpRate(m_DataCenter.HunterExp, num5 + 1);
+			}
+			panelMissionSuccessMutiply_PlayerRewards.m_HunterExp.Level = num4;
+			panelMissionSuccessMutiply_PlayerRewards.m_HunterExp.BarValue = barValue2;
+			panelMissionSuccessMutiply_PlayerRewards.m_HunterExp.SetAnimation(fCurRate2, num5);
+		}
+		if (m_User != null && m_User.isDead)
+		{
+			panelMissionSuccessMutiply_PlayerRewards.m_PlayerDeathFlag.enabled = true;
+		}
+		else
+		{
+			panelMissionSuccessMutiply_PlayerRewards.m_PlayerDeathFlag.enabled = false;
+		}
+		panelMissionSuccessMutiply_PlayerRewards.Show(true);
+		//if (cNetUserInfo == CGameNetManager.GetInstance().GetNetUserInfo())
+		//{
+			Debug.Log("hide admire");
+			panelMissionSuccessMutiply_PlayerRewards.m_Admire.Enable = false;
+		//}
 	}
 
 	public void HideGameOverUI_Win_Mutiply()

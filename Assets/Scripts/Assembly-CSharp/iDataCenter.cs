@@ -1179,7 +1179,6 @@ public class iDataCenter
 	{
 		if (content.Length < 1)
 		{
-			Debug.LogError("AGHH!!!");
 			Clear();
 			m_bFirstTimePlay = true;
 			m_nTutorialVillageState = -1;

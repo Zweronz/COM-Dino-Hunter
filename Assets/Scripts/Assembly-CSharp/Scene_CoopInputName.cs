@@ -53,6 +53,7 @@ public class Scene_CoopInputName : MonoBehaviour
 			top_bar.SetBtnCrystalShow(false);
 		}
 		OpenBtnContinue(false);
+		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopInputName(TUIEvent.SceneCoopInputNameEventType.TUIEvent_Continue, "JohnnyHello"));
 	}
 
 	private void Update()

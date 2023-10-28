@@ -6092,7 +6092,7 @@ public class TUIDataServer
 					//{
 						iGameApp.GetInstance().ScreenLog("play game !!! " + num3);
 						m_GameState.GameLevel = num3;
-						m_GameState.m_nCurHunterLevelID = m_DataCenter.HunterLvl * 4;
+						m_GameState.m_nCurHunterLevelID = m_DataCenter.HunterLvl * 2;
 						iGameApp.GetInstance().EnterScene(kGameSceneEnum.Game);
 						//CGameNetSender.GetInstance().SendMsg_GAME_ENTER(num3, m_DataCenter.HunterLvl, curRoom2);
 					//}

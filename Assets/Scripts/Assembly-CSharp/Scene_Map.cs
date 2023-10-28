@@ -47,6 +47,7 @@ public class Scene_Map : MonoBehaviour
 
 	private void Awake()
 	{
+		CGameNetManager.GetInstance().connected = false;
 		TUIDataServer.Instance().Initialize();
 		global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMap>(TUIEvent_SetUIInfo);
 		TUISelfAdaptiveAnchorGroup component = base.transform.GetComponent<TUISelfAdaptiveAnchorGroup>();

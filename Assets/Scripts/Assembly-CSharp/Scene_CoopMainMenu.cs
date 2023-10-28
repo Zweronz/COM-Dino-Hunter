@@ -507,8 +507,9 @@ public class Scene_CoopMainMenu : MonoBehaviour
 				CUISound.GetInstance().Play("UI_Button");
 			}
 			CGameNetManager.GetInstance().connected = true;
-			DoSceneChange(0, "Scene_CoopRoom");
-			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Start));
+			global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopRoom(TUIEvent.SceneCoopRoomEventType.TUIEvent_GameStartYes));
+			//DoSceneChange(0, "Scene_CoopRoom");
+			//global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.SendEvent_SceneCoopMainMenu(TUIEvent.SceneCoopMainMenuEventType.TUIEvent_Start));
 		}
 	}
 

@@ -107,7 +107,7 @@ public class iLoginManager : MonoBehaviour
 		iServerVerify.GetInstance().ConnectServer("3.1.7a", OnVerifySuccess, OnVerifyFailed, OnVerifyNetError, 10f, 0f);
 		m_fTimeout = 60f;
 		m_fTimeoutCount = 0f;
-		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_ChangeText, "Connecting to the Internet..."));
+		//global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_ChangeText, "Connecting to the Internet..."));
 	}
 
 	public void RestartApp()
@@ -115,7 +115,7 @@ public class iLoginManager : MonoBehaviour
 		m_State = kState.StartApp;
 		m_fTimeout = 60f;
 		m_fTimeoutCount = 0f;
-		iServerVerify.GetInstance().ConnectServer("3.1.7a", OnVerifySuccess, OnVerifyFailed, OnVerifyNetError, 10f, 0f);
+		//iServerVerify.GetInstance().ConnectServer("3.1.7a", OnVerifySuccess, OnVerifyFailed, OnVerifyNetError, 10f, 0f);
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_ChangeText, "Connecting to the Internet..."));
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_HidePopupWarnning));
 		global::EventCenter.EventCenter.Instance.Publish(this, new TUIEvent.BackEvent_SceneMain(TUIEvent.SceneMainEventType.TUIEvent_HidePopupServer));

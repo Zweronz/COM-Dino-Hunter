@@ -39,11 +39,14 @@ public class Scene_Main : MonoBehaviour
 
 	public Transform tui_control;
 
+	private bool didTheThing;
+
 	private void Awake()
 	{
 		Application.targetFrameRate = 240;
 		TUIDataServer.Instance().Initialize();
-		global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMain>(TUIEvent_SetUIInfo);
+		//global::EventCenter.EventCenter.Instance.Register<TUIEvent.BackEvent_SceneMain>(TUIEvent_SetUIInfo);
+		label_text.Text = "Touch to play";
 	}
 
 	private void Start()
@@ -57,6 +60,14 @@ public class Scene_Main : MonoBehaviour
 
 	private void Update()
 	{
+		if (Input2.touchCount > 0 && !didTheThing)
+		{
+			is_fade_out = true;
+			m_fade.FadeOut();
+			next_scene = "Scene_MainMenu";
+			CUISound.GetInstance().Play("UI_Entergame");
+			didTheThing = true;
+		}
 		if (m_fade == null)
 		{
 			Debug.Log("error!no found m_fade!");

@@ -3549,7 +3549,6 @@ public class iGameSceneBase
 	public void ShowGameOverUI_Win_Mutiply()
 	{
 		int crystals = Mathf.Clamp(Mathf.FloorToInt(bossHP / 1000f / Mathf.Clamp(bossLvl / 4, 1, 15)), 1, 5);
-		m_GameState.AddCrystal(crystals);
 		m_DataCenter.AddCrystal(crystals);
 		int num2 = m_GameState.m_nLevelRewardGold + m_GameState.GainGoldInGame;
 		int nBeadmireCount = 0;

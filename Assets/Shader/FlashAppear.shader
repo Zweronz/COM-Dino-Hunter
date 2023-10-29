@@ -48,7 +48,6 @@ SubShader {
   	o.vertex = UnityObjectToClipPos(v.vertex);
     o.color = _FlashColor;
     float4 worldnormal = mul(CalculateInverseTranspose(unity_ObjectToWorld), float4( v.normal, 0.0));
-    o.vertex.xy += float2((((o.vertex.z * worldnormal) * (1.0 - _FlashColor.w)) / 25.5).xy);
 	o.texcoord = v.texcoord;
 	return o;
   }
